@@ -384,10 +384,9 @@ def plot_to_base64(max_bytes=100000):
 # LLM agent setup
 # -----------------------------
 llm = ChatGoogleGenerativeAI(
-    model=os.getenv("GOOGLE_MODEL", "gemini-2.5-pro"),
-    temperature=0,
-    google_api_key=os.getenv("GOOGLE_API_KEY")
-)
+    model=os.getenv("GOOGLE_MODEL", "gemini-1.5-pro-latest"),
+    temperature=0
+
 
 # Tools list for agent (LangChain tool decorator returns metadata for the LLM)
 tools = [scrape_url_to_dataframe]  # we only expose scraping as a tool; agent will still produce code
