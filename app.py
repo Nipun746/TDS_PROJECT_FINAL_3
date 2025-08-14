@@ -57,7 +57,7 @@ LLM_TIMEOUT_SECONDS = int(os.getenv("LLM_TIMEOUT_SECONDS", 150))
 async def serve_frontend():
     """Serve the main HTML interface"""
     try:
-        with open("index.html", "r", encoding="utf-8") as f:
+        with open("index2.html", "r", encoding="utf-8") as f:
             return HTMLResponse(content=f.read())
     except FileNotFoundError:
         return HTMLResponse(content="<h1>Frontend not found</h1><p>Please ensure index.html is in the same directory as app.py</p>", status_code=404)
@@ -384,9 +384,10 @@ def plot_to_base64(max_bytes=100000):
 # LLM agent setup
 # -----------------------------
 llm = ChatGoogleGenerativeAI(
-    model=os.getenv("GOOGLE_MODEL", "gemini-1.5-pro-latest"),
-    temperature=0
-
+    model=os.getenv("GOOGLE_MODEL", "gemini-2.5-pro"),
+    temperature=0,
+    google_api_key=os.getenv("GOOGLE_API_KEY")
+)
 
 # Tools list for agent (LangChain tool decorator returns metadata for the LLM)
 tools = [scrape_url_to_dataframe]  # we only expose scraping as a tool; agent will still produce code
@@ -714,4 +715,3 @@ async def analyze_get_info():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=int(os.getenv("PORT", 8000)))
-
